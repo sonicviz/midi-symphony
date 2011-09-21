@@ -1,6 +1,7 @@
 ﻿
 
 using Midi;
+using System.Collections.Generic;
 namespace SongCraft
 {
 	/// <summary>
@@ -15,6 +16,7 @@ namespace SongCraft
 		public BarMeasure signature;
 		public int key;
 		public ScalePattern scale;
-		public Instrument instrument;
+		public Clip instrument;
+		public MObject parent;
 	}
 }
