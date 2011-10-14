@@ -230,6 +230,8 @@ namespace Midi
         /// <seealso cref="Reset"/>
         public void Start()
         {
+            shouldStop = false;
+
             if (isSchedulerThread)
             {
                 throw new InvalidOperationException("Clock already running.");
@@ -281,6 +283,11 @@ namespace Midi
             {
                 throw new InvalidOperationException("Can't call Stop() from the scheduler thread.");
             }
+            InternalStop(true);
+        }
+
+        private void InternalStop(bool lockThread = false)
+        {
             lock (runLock)
             {
                 if (!isRunning)
@@ -290,12 +297,21 @@ namespace Midi
 
                 // Tell the thread to stop, wait for it to terminate, then discard it.  By the time this is done, we know
                 // that the scheduler will not invoke any more messages.
-                lock (threadLock)
+                if (lockThread)
+                {
+                    lock (threadLock)
+                    {
+                        threadShouldExit = true;
+                        Monitor.Pulse(threadLock);
+                    }
+                    thread.Join();
+                }
+                else
                 {
                     threadShouldExit = true;
                     Monitor.Pulse(threadLock);
                 }
-                thread.Join();
+
                 thread = null;
 
                 // Stop the stopwatch.
@@ -322,6 +338,11 @@ namespace Midi
             {
                 throw new InvalidOperationException("Clock is running.");
             }
+            InternalReset();
+        }
+
+        public void InternalReset()
+        {
             lock (runLock)
             {
                 if (isRunning)
@@ -409,6 +430,18 @@ namespace Midi
             {
                 while (true)
                 {
+                    if (shouldStop)
+                    {
+                        InternalStop();
+                        shouldStop = false;
+                    }
+                    if (shouldLoop)
+                    {
+                        stopwatch.Reset();
+                        stopwatch.Start();
+                        shouldLoop = false;
+                        millisecondFudge = 0;
+                    }
                     if (threadShouldExit)
                     {
                         return;
@@ -454,6 +487,9 @@ namespace Midi
         private bool threadShouldExit;
         private float threadProcessingTime;
         private MessageQueue threadMessageQueue;
+
+        public bool shouldStop;
+        public bool shouldLoop;
 
         /// <summary>
         /// Thread-local, set to true in the scheduler thread, false in all other threads.
