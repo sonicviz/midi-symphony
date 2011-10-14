@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C# Express 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XnaConsole", "code\XnaConsole.csproj", "{9644D907-C53B-4EB1-AB21-617463E90886}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9644D907-C53B-4EB1-AB21-617463E90886}.Debug|x86.ActiveCfg = Debug|x86
+		{9644D907-C53B-4EB1-AB21-617463E90886}.Debug|x86.Build.0 = Debug|x86
+		{9644D907-C53B-4EB1-AB21-617463E90886}.Release|x86.ActiveCfg = Release|x86
+		{9644D907-C53B-4EB1-AB21-617463E90886}.Release|x86.Build.0 = Release|x86
+		{7B594791-C7AF-43FC-A274-1F3F194C6F55}.Debug|x86.ActiveCfg = Debug|x86
+		{7B594791-C7AF-43FC-A274-1F3F194C6F55}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

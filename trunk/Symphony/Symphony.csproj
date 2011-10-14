@@ -56,7 +56,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scope.cs" />
-    <Compile Include="SoundEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Midi\Midi.csproj">
